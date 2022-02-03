@@ -21,8 +21,6 @@ I am a Doctor and like Developing amazing repositories on GitHub!😊I always lo
   <h2>🤔Why use My Work?</h2>
   <p><b>People use my Repository because the Simplicity and easy to handle!😉I always covers those features which are on High-Demand and also consider Ideas given by my Users. I regulary update my Repositories and fix problems! I continueosly works on New Idea and share some program or pyrograms with my Users.</b></p>
   <h2>📞Contact Us!</h2>
-  <p><b>You can directly contact me! at Telegram using my Bot(<a href="https://telegram.me/HelpAutomatted_Bot">@HelpAutomatted_Bot</a>).Ask me anything regarding Technology or about my Repository</b></p>
+  <p><b>You can directly contact me! at Telegram using my Bot(<a href="https://telegram.me/HelpAutomatted_Bot">@HelpAutomatted_Bot</a>).Ask me anything regarding Technology or about my Repository.</b></p>
   <h2>❤️Credits & Thanks</h2>
   <p><b><a href="https://github.com/TheCaduceus">Dr.Caduceus</a>: I am the only person who manage this Profile and Repositories!.</b></p>
-  </body>
-</html>
