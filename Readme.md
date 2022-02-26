@@ -1,3 +1,4 @@
+![Typing SVG](https://auto-typer-production.up.railway.app?font=&color=%2318F7C8&duration=9000&center=true&vCenter=true&lines=Welcome+to+Dr.Caduceus;Where+User+meets+Powerful+Tools)
 # Dr.Caduceus
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
