@@ -1,14 +1,3 @@
-<!---Auto-Typer Under Development--->
-<!---![Typing SVG](https://auto-typer-production.up.railway.app?font=&color=%2318F7C8&duration=9000&center=true&vCenter=true&lines=Welcome+to+Dr.Caduceus;Where+User+meets+Powerful+Tools)--->
-<!---Auto-Typer End--->
-# Dr.Caduceus
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
 <h2>📝Introduction</h2>
 <p><b>Hi there! Nice to meet you.👋<br>
 I am a Doctor and like Developing amazing repositories on GitHub!😊I always look for something that will make people's work easy and can solve there problems in seconds😄. I always thinks of different way for performing same thing and make it easiest as much as possible, also while developing anything I keep in my mind that the program which I am  developing can be used easily by those people who are not interested in Technology or have little information about it and in the same time for those who are Tech Savvy. I love creating Bots and Google Colab NoteBook (Jupyter's Notebook) because only they can help me for creating a defficult task into simple and confortable!😉</b></p>
