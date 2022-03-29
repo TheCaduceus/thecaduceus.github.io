@@ -60,7 +60,6 @@ fi
 
 if [ "$version" = "$current_version" ]; then
     printf "\nThe latest ${install_beta}version of rclone ${version} is already installed.\n\n"
-    !apt-get install rar
     exit 3
 fi
 
@@ -190,5 +189,4 @@ version=$(rclone --version 2>>errors | head -n 1)
 
 printf "\n${version} has successfully installed."
 printf '\nAll Done! Customized by Dr.Caduceus\n\n'
-!apt-get install rar
 exit 0
