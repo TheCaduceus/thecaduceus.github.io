@@ -188,5 +188,6 @@ esac
 version=$(rclone --version 2>>errors | head -n 1)
 
 printf "\n${version} has successfully installed."
-printf '\nAll Done! Customized by Dr.Caduceus\n\n'
+printf '\nAll Done!\n'
+printf '\nCustomized for Google Colaborately by Dr.Caduceus'
 exit 0
