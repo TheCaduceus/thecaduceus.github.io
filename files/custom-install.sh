@@ -188,7 +188,7 @@ esac
 version=$(rclone --version 2>>errors | head -n 1)
 
 printf "\n${version} has successfully installed."
-apt install p7zip-full p7zip-rar
+!apt install p7zip-full p7zip-rar
 printf '\nAll Done!\n'
 printf '\nCustomized for Google Colaborately by Dr.Caduceus'
 exit 0
