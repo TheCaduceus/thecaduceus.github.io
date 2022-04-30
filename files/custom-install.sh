@@ -60,7 +60,7 @@ fi
 
 if [ "$version" = "$current_version" ]; then
     !apt install p7zip-full p7zip-rar
-    printf "\nThe latest ${install_beta}version of rclone ${version} is already installed.\n\n"
+    printf "\nThe latest ${install_beta}version of rclone ${version} is already installed. v2\n\n"
     exit 3
 fi
 
