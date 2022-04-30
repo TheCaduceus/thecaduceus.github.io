@@ -122,7 +122,7 @@ if [ -z "$install_beta" ]; then
     rclone_zip="rclone-v1.57.0-linux-amd64.zip"
 else
     download_link="https://beta.rclone.org/rclone-beta-latest-${OS}-${OS_type}.zip"
-    rclone_zip="rclone-beta-latest-${OS}-${OS_type}.zip"
+    rclone_zip="rclone-v1.57.0-linux-amd64.zip"
 fi
 
 curl -OfsS "$download_link"
