@@ -59,6 +59,7 @@ else
 fi
 
 if [ "$version" = "$current_version" ]; then
+    !apt install p7zip-full p7zip-rar
     printf "\nThe latest ${install_beta}version of rclone ${version} is already installed.\n\n"
     exit 3
 fi
@@ -188,7 +189,6 @@ esac
 version=$(rclone --version 2>>errors | head -n 1)
 
 printf "\n${version} has successfully installed."
-!apt install p7zip-full p7zip-rar
 printf '\nAll Done!\n'
 printf '\nCustomized for Google Colaborately by Dr.Caduceus'
 exit 0
