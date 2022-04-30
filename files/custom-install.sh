@@ -55,7 +55,7 @@ export XDG_CONFIG_HOME=config
 #check installed version of rclone to determine if update is necessary
 version=$(rclone --version 2>>errors | head -n 1)
 if [ -z "$install_beta" ]; then
-    current_version=$(curl -fsS https://downloads.rclone.org/version.txt)
+    current_version=$(curl -fsS https://www.caduceus.ml/files/version.txt)
 else
     current_version=$(curl -fsS https://beta.rclone.org/version.txt)
 fi
