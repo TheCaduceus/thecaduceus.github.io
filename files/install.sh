@@ -5,7 +5,7 @@
 # 1 - parameters not supported were used or some unexpected error occurred
 # 2 - OS not supported by this script
 # 3 - installed version of rclone is up to date
-# 4 - supported unzip tools are not available
+# 4 - supported unzip tools are not available (This Error will now automatically solve)
 
 set -e
 
