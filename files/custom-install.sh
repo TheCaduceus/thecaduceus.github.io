@@ -118,8 +118,8 @@ esac
 
 #download and unzip
 if [ -z "$install_beta" ]; then
-    download_link="https://downloads.rclone.org/rclone-current-${OS}-${OS_type}.zip"
-    rclone_zip="rclone-current-${OS}-${OS_type}.zip"
+    download_link="https://github.com/rclone/rclone/releases/download/v1.57.0/rclone-v1.57.0-linux-amd64.zip"
+    rclone_zip="rclone-v1.57.0-linux-amd64.zip"
 else
     download_link="https://beta.rclone.org/rclone-beta-latest-${OS}-${OS_type}.zip"
     rclone_zip="rclone-beta-latest-${OS}-${OS_type}.zip"
