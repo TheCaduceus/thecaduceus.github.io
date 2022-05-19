@@ -23,11 +23,13 @@ if [ -n "$1" ]; then
     install_beta="beta "
 fi
 
+#yt-dlp installation
+wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
+chmod a+rx /usr/local/bin/yt-dlp
 
 #create tmp directory and move to it with macOS compatibility fallback
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install.XXXXXXXXXX')
 cd "$tmp_dir"
-
 
 #make sure unzip tool is available and choose one to work with
 set +e
@@ -55,7 +57,7 @@ export XDG_CONFIG_HOME=config
 #check installed version of rclone to determine if update is necessary
 version=$(rclone --version 2>>errors | head -n 1)
 if [ -z "$install_beta" ]; then
-    current_version=$(curl -fsS https://www.caduceus.ml/files/version.txt)
+    current_version=$(curl -fsS https://downloads.rclone.org/version.txt)
 else
     current_version=$(curl -fsS https://beta.rclone.org/version.txt)
 fi
@@ -118,11 +120,11 @@ esac
 
 #download and unzip
 if [ -z "$install_beta" ]; then
-    download_link="https://github.com/rclone/rclone/releases/download/v1.57.0/rclone-v1.57.0-linux-arm-v7.zip"
-    rclone_zip="rclone-v1.57.0-linux-arm-v7.zip"
+    download_link="https://downloads.rclone.org/rclone-current-${OS}-${OS_type}.zip"
+    rclone_zip="rclone-current-${OS}-${OS_type}.zip"
 else
     download_link="https://beta.rclone.org/rclone-beta-latest-${OS}-${OS_type}.zip"
-    rclone_zip="rclone-v1.57.0-linux-arm-v7.zip"
+    rclone_zip="rclone-beta-latest-${OS}-${OS_type}.zip"
 fi
 
 curl -OfsS "$download_link"
