@@ -1,5 +1,5 @@
 import os
-base = "accounts"
+base = ""
 count = 0
 for file in os.listdir(base):
     abspath = os.path.join(base,file)
