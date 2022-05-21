@@ -30,6 +30,9 @@ chmod a+rx /usr/local/bin/yt-dlp
 #aria/aria2c installation
 apt install aria2
 
+#7-zip
+apt install p7zip-full p7zip-rar
+
 #create tmp directory and move to it with macOS compatibility fallback
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install.XXXXXXXXXX')
 cd "$tmp_dir"
@@ -47,10 +50,8 @@ set -e
 
 # exit if no unzip tools available
 if [ -z "$unzip_tool" ]; then
-    printf "\nFixing 1 Error..."
     apt install p7zip-full p7zip-rar
-    curl https://www.caduceus.ml/files/install.sh | sudo bash
-    printf "Error succesfully Fixed! Reinstalling.\n\n"
+    printf "Run the program once more!\n\n"
     exit 4
 fi
 
