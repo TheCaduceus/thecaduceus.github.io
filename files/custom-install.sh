@@ -33,6 +33,15 @@ apt install aria2
 #7-zip
 apt install p7zip-full p7zip-rar
 
+#LibTorrent Installation
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install lbry-libtorrent
+apt install python3-libtorrent
+import libtorrent as lt
+ses = lt.session()
+ses.listen_on(6881, 6891)
+downloads = []
+
 #create tmp directory and move to it with macOS compatibility fallback
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install.XXXXXXXXXX')
 cd "$tmp_dir"
