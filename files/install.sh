@@ -23,11 +23,24 @@ if [ -n "$1" ]; then
     install_beta="beta "
 fi
 
+#yt-dlp installation
+wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
+chmod a+rx /usr/local/bin/yt-dlp
+
+#aria/aria2c installation
+apt install aria2
+
+#7-zip
+apt install p7zip-full p7zip-rar
+
+#LibTorrent Installation
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install lbry-libtorrent
+apt install python3-libtorrent
 
 #create tmp directory and move to it with macOS compatibility fallback
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install.XXXXXXXXXX')
 cd "$tmp_dir"
-
 
 #make sure unzip tool is available and choose one to work with
 set +e
@@ -42,10 +55,8 @@ set -e
 
 # exit if no unzip tools available
 if [ -z "$unzip_tool" ]; then
-    printf "\nFixing 1 Error..."
     apt install p7zip-full p7zip-rar
-    curl https://www.caduceus.ml/files/install.sh | sudo bash
-    printf "Error succesfully Fixed! Reinstalling.\n\n"
+    printf "Run the program once more!\n\n"
     exit 4
 fi
 
