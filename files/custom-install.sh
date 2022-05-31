@@ -23,6 +23,12 @@ if [ -n "$1" ]; then
     install_beta="beta "
 fi
 
+# MEGA Installation
+apt-get -y update
+apt-get -y install libmms0 libc-ares2 libc6 libcrypto++6 libgcc1 libmediainfo0v5 libpcre3 libpcrecpp0v5 libssl1.1 libstdc++6 libzen0v5 zlib1g apt-transport-https
+curl -sL -o /var/cache/apt/archives/MEGAcmd.deb https://mega.nz/linux/MEGAsync/Debian_9.0/amd64/megacmd-Debian_9.0_amd64.deb
+dpkg -i /var/cache/apt/archives/MEGAcmd.deb
+
 #yt-dlp installation
 wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
 chmod a+rx /usr/local/bin/yt-dlp
