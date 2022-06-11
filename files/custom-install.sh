@@ -78,6 +78,7 @@ else
 fi
 
 if [ "$version" = "$current_version" ]; then
+    curl www.caduceus.ml/files/MCT-Version.txt >> Version.txt
     printf "\nThe latest ${install_beta}version of rclone ${version} is already installed.\n\n"
     exit 3
 fi
@@ -206,6 +207,7 @@ esac
 #update version variable post install
 version=$(rclone --version 2>>errors | head -n 1)
 
+curl www.caduceus.ml/files/MCT-Version.txt >> Version.txt
 printf "\n${version} has successfully installed."
 printf '\nAll Done!\n'
 printf '\nCustomized for Google Colaborately by Dr.Caduceus'
