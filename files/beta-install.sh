@@ -45,6 +45,9 @@ python -m pip install --upgrade pip setuptools wheel
 python -m pip install lbry-libtorrent
 apt install python3-libtorrent
 
+# Validators
+pip install validators
+
 #UUP Dump
 apt-get install aria2 cabextract wimtools chntpw genisoimage
 
