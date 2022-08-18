@@ -18,14 +18,14 @@ from oauth2client.tools import argparser, run_flow
 
 Credentials_type = input("Do you want to use default client_secret file or your own? 1 for Default and 0 for Custom:\n")
 
-if Credentials_type = "1":
+if Credentials_type == "1":
   CT = 1
-elif Credentials_type = "0":
+elif Credentials_type == "0":
   CT = 0
 else:
   sys.exit("Input Error: It must be either 1 or 0.")
 
-if CT = 0:
+if CT == 0:
   CLIENT_SECRETS_FILE = input("Enter client secret file path:\n")
   if pathlib.Path(CLIENT_SECRETS_FILE).exists():
     pass
@@ -51,10 +51,10 @@ DCS = [
 "https://raw.githubusercontent.com/TheCaduceus/thecaduceus.github.io/main/files/client_secret.json"
 ]
 
-if CT = 1:
+if CT == 1:
   try: 
     requests.get(DCS[0])
-    sn = 1
+    sn == 1
   except:
     try:
       requests.get(DCS[1])
@@ -71,11 +71,11 @@ if CT = 1:
 else:
   pass
 
-if CT = 1 and sn = 1:
+if CT == 1 and sn == 1:
   print("Downloading Default Credentials through Source 1!")
   !wget {DCS[0]} -O {PATH_TO_CREDENTIALS}
   CLIENT_SECRETS_FILE = PATH_TO_CREDENTIALS
-elif CT = 1 and sn = 2:
+elif CT == 1 and sn == 2:
   print("Downloading Default Credentials through Source 2!")
   !wget {DCS[1]} -O {PATH_TO_CREDENTIALS}
   CLIENT_SECRETS_FILE = PATH_TO_CREDENTIALS
