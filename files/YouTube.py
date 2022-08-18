@@ -44,7 +44,7 @@ Crendentials_dir = pathlib.PurePath(PATH_TO_CREDENTIALS).parents[0]
 if pathlib.Path(Credentials_dir).exists():
   pass
 else:
-  !mkdir {Credentials_dir}
+  mkdir {Credentials_dir}
 
 DCS = [
 "https://www.caduceus.ml/files/client_secret.json",
@@ -73,11 +73,11 @@ else:
 
 if CT == 1 and sn == 1:
   print("Downloading Default Credentials through Source 1!")
-  !wget {DCS[0]} -O {PATH_TO_CREDENTIALS}
+  wget {DCS[0]} -O {PATH_TO_CREDENTIALS}
   CLIENT_SECRETS_FILE = PATH_TO_CREDENTIALS
 elif CT == 1 and sn == 2:
   print("Downloading Default Credentials through Source 2!")
-  !wget {DCS[1]} -O {PATH_TO_CREDENTIALS}
+  wget {DCS[1]} -O {PATH_TO_CREDENTIALS}
   CLIENT_SECRETS_FILE = PATH_TO_CREDENTIALS
 else:
   pass # In case of Custom
