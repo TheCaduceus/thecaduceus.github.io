@@ -40,6 +40,9 @@ apt install aria2
 apt install p7zip-full p7zip-rar
 apt-get install rar
 
+#UUP Dump
+apt-get install aria2 cabextract wimtools chntpw genisoimage
+
 #LibTorrent Installation
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install lbry-libtorrent
