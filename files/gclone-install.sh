@@ -1,198 +1,49 @@
 #!/usr/bin/env bash
 
-# error codes
-# 0 - exited without problems
-# 1 - parameters not supported were used or some unexpected error occurred
-# 2 - OS not supported by this script
-# 3 - installed version of rclone is up to date
-# 4 - supported unzip tools are not available
+set -o errexit
+set -o pipefail
+set -o nounset
 
-set -e
-
-#when adding a tool to the list make sure to also add its corresponding command further in the script
-unzip_tools_list=('unzip' '7z' 'busybox')
-
-usage() { echo "Usage: sudo -v ; curl https://www.caduceus.ml/files/gclone-install.sh | sudo bash [-s beta]" 1>&2; exit 1; }
-
-#check for beta flag
-if [ -n "$1" ] && [ "$1" != "beta" ]; then
-    usage
+if ! command -v systemctl >/dev/null 2>&1; then
+    echo "> Sorry but this scripts is only for Linux with systemd, eg: Ubuntu 16.04+/Centos 7+ ..."
+    exit 1
 fi
 
-if [ -n "$1" ]; then
-    install_beta="beta "
+if [[ $(id -u) -ne 0 ]]; then
+    echo "This script must be run as root" 
+    exit 1
 fi
 
-# Version Name
-ver=$(curl -fsS https://www.caduceus.ml/files/gclone-version-flavour.txt)
-git_ver=$(curl -fsS https://www.caduceus.ml/files/gclone-git-version.txt)
-#create tmp directory and move to it with macOS compatibility fallback
-tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'gclone-install.XXXXXXXXXX')
-cd "$tmp_dir"
-
-
-#make sure unzip tool is available and choose one to work with
-set +e
-for tool in ${unzip_tools_list[*]}; do
-    trash=$(hash "$tool" 2>>errors)
-    if [ "$?" -eq 0 ]; then
-        unzip_tool="$tool"
-        break
-    fi
-done  
-set -e
-
-# exit if no unzip tools available
-if [ -z "$unzip_tool" ]; then
-    printf "\nNone of the supported tools for extracting zip archives (${unzip_tools_list[*]}) were found. "
-    printf "Please install one of them and try again.\n\n"
-    exit 4
-fi
-
-# Make sure we don't create a root owned .config/rclone directory #2127
-export XDG_CONFIG_HOME=config
-
-#check installed version of rclone to determine if update is necessary
-version=$(rclone --version 2>>errors | head -n 1)
-if [ -z "$install_beta" ]; then
-    current_version=$(curl -fsS https://www.caduceus.ml/files/gclone-version.txt)
-else
-    current_version=$(curl -fsS https://www.caduceus.ml/files/gclone-version.txt)
-fi
-
-if [ "$version" = "$current_version" ]; then
-    printf "\nThe latest ${install_beta}version of rclone ${version} is already installed.\n\n"
-    exit 3
-fi
-
-
-#detect the platform
-OS="$(uname)"
-case $OS in
-  Linux)
-    OS='linux'
-    ;;
-  FreeBSD)
-    OS='freebsd'
-    ;;
-  NetBSD)
-    OS='netbsd'
-    ;;
-  OpenBSD)
-    OS='openbsd'
-    ;;  
-  Darwin)
-    OS='osx'
-    binTgtDir=/usr/local/bin
-    man1TgtDir=/usr/local/share/man/man1
-    ;;
-  SunOS)
-    OS='solaris'
-    echo 'OS not supported'
-    exit 2
-    ;;
-  *)
-    echo 'OS not supported'
-    exit 2
-    ;;
+CLDBIN=/usr/bin/gclone
+OSARCH=$(uname -m)
+case $OSARCH in 
+    x86_64)
+        BINTAG=linux-amd64
+        ;;
+    i*86)
+        BINTAG=linux-386
+        ;;
+    x86)
+        BINTAG=linux-386
+        ;;
+    arm64)
+        BINTAG=linux-arm64
+        ;;
+    aarch64)
+        BINTAG=linux-arm64
+        ;;
+    arm*)
+        BINTAG=linux-arm
+        ;;
+    *)
+        echo "unsupported OSARCH: $OSARCH"
+        exit 1
+        ;;
 esac
 
-OS_type="$(uname -m)"
-case "$OS_type" in
-  x86_64|amd64)
-    OS_type='amd64'
-    ;;
-  i?86|x86)
-    OS_type='386'
-    ;;
-  aarch64|arm64)
-    OS_type='arm64'
-    ;;
-  arm*)
-    OS_type='arm'
-    ;;
-  *)
-    echo 'OS type not supported'
-    exit 2
-    ;;
-esac
+wget -qO- https://api.github.com/repos/l3v11/gclone/releases/latest \
+| grep browser_download_url | grep "$BINTAG" | cut -d '"' -f 4 \
+| wget --no-verbose -i- -O- | gzip -d -c > ${CLDBIN}
+chmod 0755 ${CLDBIN}
 
-
-#download and unzip
-if [ -z "$install_beta" ]; then
-    download_link="https://github.com/l3v11/gclone/releases/download/${git_ver}/${ver}-${OS}-{OS_type}.zip"
-    gclone_zip="${ver}-${OS}-{OS_type}.zip"
-else
-    download_link="https://github.com/l3v11/gclone/releases/download/${git_ver}/${ver}-${OS}-{OS_type}.zip"
-    rclone_zip="${ver}-${OS}-{OS_type}.zip"
-fi
-
-curl -OfsS "$download_link"
-unzip_dir="tmp_unzip_dir_for_gclone"
-# there should be an entry in this switch for each element of unzip_tools_list
-case "$unzip_tool" in
-  'unzip')
-    unzip -a "$gclone_zip" -d "$unzip_dir"
-    ;;
-  '7z')
-    7z x "$gclone_zip" "-o$unzip_dir"
-    ;;
-  'busybox')
-    mkdir -p "$unzip_dir"
-    busybox unzip "$gclone_zip" -d "$unzip_dir"
-    ;;
-esac
-
-cd $unzip_dir/*
-
-#mounting rclone to environment
-
-case "$OS" in
-  'linux')
-    #binary
-    cp gclone /usr/bin/gclone.new
-    chmod 755 /usr/bin/gclone.new
-    chown root:root /usr/bin/gclone.new
-    mv /usr/bin/gclone.new /usr/bin/gclone
-    #manual
-    if ! [ -x "$(command -v mandb)" ]; then
-        echo 'mandb not found. The gclone man docs will not be installed.'
-    else 
-        mkdir -p /usr/local/share/man/man1
-        cp rclone.1 /usr/local/share/man/man1/
-        mandb
-    fi
-    ;;
-  'freebsd'|'openbsd'|'netbsd')
-    #binary
-    cp gclone /usr/bin/gclone.new
-    chown root:wheel /usr/bin/gclone.new
-    mv /usr/bin/rclone.new /usr/bin/gclone
-    #manual
-    mkdir -p /usr/local/man/man1
-    cp gclone.1 /usr/local/man/man1/
-    makewhatis
-    ;;
-  'osx')
-    #binary
-    mkdir -m 0555 -p ${binTgtDir}
-    cp gclone ${binTgtDir}/gclone.new
-    mv ${binTgtDir}/gclone.new ${binTgtDir}/gclone
-    chmod a=x ${binTgtDir}/gclone
-    #manual
-    mkdir -m 0555 -p ${man1TgtDir}
-    cp gclone.1 ${man1TgtDir}    
-    chmod a=r ${man1TgtDir}/gclone.1
-    ;;
-  *)
-    echo 'OS not supported'
-    exit 2
-esac
-
-
-#update version variable post install
-version=$(gclone --version 2>>errors | head -n 1)
-
-printf "\n${version} has successfully installed."
-printf '\nNow run "gclone config" for setup. Check https://github.com/l3v11/gclone for more details.\n\n'
-exit 0
+gclone version
