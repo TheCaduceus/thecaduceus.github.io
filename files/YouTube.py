@@ -122,7 +122,7 @@ def get_authenticated_service(args):
     scope=YOUTUBE_UPLOAD_SCOPE,
     message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-  storage = Storage("%s-oauth2.json" % sys.argv[0])
+  storage = Storage(f"{sys.argv[0]}-oauth2.json")
   credentials = storage.get()
 
   if credentials is None or credentials.invalid:
@@ -132,10 +132,7 @@ def get_authenticated_service(args):
     http=credentials.authorize(httplib2.Http()))
 
 def initialize_upload(youtube, options):
-  tags = None
-  if options.keywords:
-    tags = options.keywords.split(",")
-
+  tags = options.keywords.split(",") if options.keywords else None
   body=dict(
     snippet=dict(
       title=options.title,
